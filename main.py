@@ -1,5 +1,7 @@
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
+from . bot_broadcast import broadcast
+from keyboards import user_keyboards
 import os
 import asyncio
 
@@ -13,6 +15,7 @@ async def main():
     dispatcher = Dispatcher()
 
     await dispatcher.start_polling(bot)
-
+    await dispatcher.include_router(broadcast.router)
 if __name__ == "__main__":
     asyncio.run(main())
+    asyncio.run(user_keyboards.get_url())

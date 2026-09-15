@@ -1,17 +1,20 @@
+
+
 import aiosqlite
 
 DB_NAME = ("database.db")
-async def main():
+async def init_db():
     async with aiosqlite.connect(DB_NAME) as db:
         await db.execute('''CREATE TABLE IF NOT EXISTS streams(
-                                channel_id TEXT,
-                                last_stream_id TEXT
-                                is_live BOOLEAN,
-                                last_title TEXT, 
+                                is_live INTEGER DEFAULT 0
+                                )
                         ''')
+        await db.commit()
+
         await db.execute('''CREATE TABLE IF NOT EXISTS users(
-                                user_id TEXT,
-                                username TEXT,
-                                broadcast BOOLEAN,
-                                class TEXT DEFAULT "user" 
+                                user_id TEXT PRIMARY KEY,
+                                username TEXT ,
+                                broadcast INTEGER DEFAULT 1,
+                                class TEXT DEFAULT 'user')
                         ''')
+        await db.commit()
