@@ -1,5 +1,7 @@
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
+
+from database import models
 from . bot_broadcast import broadcast
 from keyboards import user_keyboards
 import os
@@ -18,4 +20,5 @@ async def main():
     await dispatcher.include_router(broadcast.router)
 if __name__ == "__main__":
     asyncio.run(main())
+    asyncio.run(models.init_db())
     asyncio.run(user_keyboards.get_url())
