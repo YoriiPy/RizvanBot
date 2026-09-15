@@ -2,7 +2,7 @@ from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 
 from database import models
-from . bot_broadcast import broadcast
+from bot_broadcast import broadcast
 from keyboards import user_keyboards
 import os
 import asyncio
