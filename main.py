@@ -1,11 +1,12 @@
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
-
+from handlers import user_handlers
 from database import models
 from bot_broadcast import broadcast
 from keyboards import user_keyboards
 import os
 import asyncio
+
 
 
 file = load_dotenv()
@@ -22,6 +23,7 @@ async def main():
     dispatcher = Dispatcher()
 
     dispatcher.include_router(broadcast.router)
+    dispatcher.include_router(user_handlers.router)
 
     # 3. Запускаем бесконечный опрос серверов Telegram
     await dispatcher.start_polling(bot)
