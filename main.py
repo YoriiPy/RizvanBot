@@ -16,7 +16,7 @@ async def main():
     bot = Bot(token=BOT_TOKEN)
     dispatcher = Dispatcher()
 
-    dispatcher.start_polling(bot)
+    await dispatcher.start_polling(bot)
     dispatcher.include_router(broadcast.router)
 if __name__ == "__main__":
     asyncio.run(main())
