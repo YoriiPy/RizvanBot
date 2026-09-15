@@ -1,10 +1,12 @@
-from re import search
+
 
 from aiogram import Bot, Router
 from aiogram.types import Message
 from database import requests
 from keyboards import  user_keyboards
-import func
+
+from . import func
+
 router = Router()
 
 async def broadcast_to_users(bot: Bot):
