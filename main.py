@@ -6,7 +6,7 @@ import os
 import asyncio
 
 
-file = load_dotenv(dotenv_path="secretfiles/TOKEN.env")
+file = load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 async def main():
