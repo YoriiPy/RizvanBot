@@ -24,6 +24,6 @@ async def start_command(message: Message):
     else:
         await message.answer("🦍 Вас приветствует бот Ризвана\n"
                              "💫 Я сообщу когда начнется стрим\n"
-                             "🚀 Вы не пропустите ни одного стрима", reply_markup=await kb.get_url())
+                             "🚀 Вы не пропустите ни одного стрима", reply_markup=await kb.get_keyboard())
         await rq.add_user(message.from_user.id, message.from_user.first_name)
         return
