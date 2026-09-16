@@ -67,13 +67,13 @@ async def add_user(user_id: int, username: str) -> None:
 # ПОИСК
 async def search_user(user_id: int):
     async with aiosqlite.connect(DB_NAME) as db:
-        async with db.execute("SELECT 1 FROM users WHERE user_id = ?", ('user',)) as cursor:
+        async with db.execute("SELECT 1 FROM users WHERE user_id = ? AND user_id = ?", ('user', user_id)) as cursor:
             result = await cursor.fetchone()
             if result == 1:
                 return True
 async def search_admin(user_id: int):
     async with aiosqlite.connect(DB_NAME) as db:
-        async with db.execute("SELECT 1 FROM users WHERE class = ?", ('admin',)) as cursor:
+        async with db.execute("SELECT 1 FROM users WHERE class = ? AND user_id", ('admin', user_id)) as cursor:
             result = await cursor.fetchone()
             if result == 1:
                 return True
