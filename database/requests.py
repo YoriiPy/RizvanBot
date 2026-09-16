@@ -46,7 +46,7 @@ async def edit_url_stream(url: str):
                 await db.execute("UPDATE streams SET url = ?", (url, ))
                 await db.commit()
             else:
-                await db.execute("INSERT INTO streams VALUES (?)", (url, ))
+                await db.execute("INSERT INTO streams (url) VALUES (?)", (url, ))
 
 # ДОБАВЛЕНИЕ
 async def add_admin(user_id: int, username: str):
