@@ -17,7 +17,6 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 async def main():
     # 1. Сначала запускаем базу данных и обновляем ссылки в клавиатурах
     await models.init_db()
-    user_keyboards.get_url()
 
     # 2. Инициализируем бота
     bot = Bot(token=BOT_TOKEN)
