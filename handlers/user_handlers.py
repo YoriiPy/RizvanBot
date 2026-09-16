@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram.filters import CommandStart
 from aiogram.types import Message
-
+from keyboards import main_admin_keyboards as mdkb
 import database
 from database import requests
 router = Router()
@@ -16,4 +16,4 @@ async def start_command(message: Message):
         return
     await message.answer("🦍 Вас приветствует бот Ризвана\n"
                          "💫 Я сообщу когда начнется стрим\n"
-                         "🚀 Вы не пропустите ни одного стрима", reply_markup=)
+                         "🚀 Вы не пропустите ни одного стрима", reply_markup=mdkb.start_keyboard())
