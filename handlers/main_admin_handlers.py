@@ -30,7 +30,7 @@ async def update_url(message: Message, state: FSMContext, bot: Bot):
         data = await state.get_data()
         message_id = data.get("message_id")
 
-        await bot.delete_message(message_id=message.chat.id, message=message_id)
+        await bot.delete_message(chat_id=message.chat.id, message=message_id)
         await message.delete()
 
 
