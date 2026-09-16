@@ -14,12 +14,12 @@ async def start_command(message: Message):
     if await rq.search_admin(message.from_user.id) or await rq.search_user(message.from_user.id):
         await message.answer("🦍 Вас приветствует бот Ризвана\n"
                              "💫 Я сообщу когда начнется стрим\n"
-                             "🚀 Вы не пропустите ни одного стрима", reply_markup=await mdkb.start_keyboard())
+                             "🚀 Вы не пропустите ни одного стрима", reply_markup=mdkb.start_keyboard())
         return
     elif await rq.search_main_admin(message.from_user.id):
         await message.answer("🦍 Вас приветствует бот Ризвана\n"
                              "💫 Я сообщу когда начнется стрим\n"
-                             "🚀 Вы не пропустите ни одного стрима", reply_markup=await mdkb.start_keyboard())
+                             "🚀 Вы не пропустите ни одного стрима", reply_markup=mdkb.start_keyboard())
         return
     else:
         await message.answer("🦍 Вас приветствует бот Ризвана\n"
