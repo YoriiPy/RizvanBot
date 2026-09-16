@@ -42,7 +42,7 @@ async def update_url(message: Message, state: FSMContext, bot: Bot):
         await state.clear()
 
 
-@router.callback_query(F.data == "back_start", state="*")
+@router.callback_query(F.data == "back_start")
 async def back_start(callback: CallbackQuery, state: FSMContext):
     await state.clear()
     await callback.answer()
