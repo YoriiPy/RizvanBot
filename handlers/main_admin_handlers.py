@@ -74,7 +74,7 @@ async def wait_send_admin(callback: CallbackQuery, state: FSMContext):
 async def add_main_admin_to_users(message: Message):
     user_id = message.from_user.id
     if await search_user(user_id) or await search_admin(user_id):
-        await rq.add_main_admin(message.from_user.id)
+        await rq.add_main_admin(user_id)
         await message.answer("✅ Успешно добавлен")
     else:
         await message.answer("❌ Такого пользователя не существует")

@@ -2,7 +2,7 @@ from aiogram import Router
 from aiogram.filters import CommandStart
 from aiogram.types import Message
 
-
+from keyboards import user_keyboards as kb
 from keyboards import main_admin_keyboards as mdkb
 import database
 from database import requests as rq
@@ -16,6 +16,14 @@ async def start_command(message: Message):
                              "💫 Я сообщу когда начнется стрим\n"
                              "🚀 Вы не пропустите ни одного стрима")
         return
-    await message.answer("🦍 Вас приветствует бот Ризвана\n"
-                         "💫 Я сообщу когда начнется стрим\n"
-                         "🚀 Вы не пропустите ни одного стрима", reply_markup=mdkb.start_keyboard())
+    elif await rq.search_main_admin(message.from_user.id):
+        await message.answer("🦍 Вас приветствует бот Ризвана\n"
+                             "💫 Я сообщу когда начнется стрим\n"
+                             "🚀 Вы не пропустите ни одного стрима")
+        return
+    else:
+        await message.answer("🦍 Вас приветствует бот Ризвана\n"
+                             "💫 Я сообщу когда начнется стрим\n"
+                             "🚀 Вы не пропустите ни одного стрима", reply_markup=await kb.get_url())
+        await rq.add_user(message.from_user.id, message.from_user.first_name)
+        return
