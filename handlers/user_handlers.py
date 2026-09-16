@@ -9,6 +9,11 @@ router = Router()
 @router.message(CommandStart())
 async def start_command(message: Message):
     await requests.add_user(message.from_user.id, message.from_user.first_name)
+    if message.from_user.id != 8461039529:
+        await message.answer("🦍 Вас приветствует бот Ризвана\n"
+                             "💫 Я сообщу когда начнется стрим\n"
+                             "🚀 Вы не пропустите ни одного стрима")
+        return
     await message.answer("🦍 Вас приветствует бот Ризвана\n"
                          "💫 Я сообщу когда начнется стрим\n"
-                         "🚀 Вы не пропустите ни одного стрима")
+                         "🚀 Вы не пропустите ни одного стрима", reply_markup=)

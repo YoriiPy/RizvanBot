@@ -1,6 +1,9 @@
 import aiohttp
 import asyncio
 
+from database import requests
+
+
 async def is_live() -> bool:
 
     HEADERS = {
@@ -10,12 +13,14 @@ async def is_live() -> bool:
 
     async with aiohttp.ClientSession(headers=HEADERS) as session:
         while True:
-            async with session.get("https://www.youtube.com/@SkyNews/live") as resp:
-                response = await resp.text()
-                if '"isLive":true' in response:
-                    return True
-                else:
-                    return False
+            result = await requests.get_url_stream()
+            if result:
+                async with session.get(f"{await requests.get_url_stream()}") as resp:
+                    response = await resp.text()
+                    if '"isLive":true' in response:
+                        return True
+                    else:
+                        return False
 
 
 

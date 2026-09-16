@@ -1,3 +1,5 @@
+from unittest import result
+
 import aiosqlite
 import asyncio
 
@@ -30,6 +32,18 @@ async def get_users_broadcast() -> bool | list[tuple[int]]:
 async def update_state_stream(number):
     async with aiosqlite.connect(DB_NAME) as db:
         await db.execute("UPDATE streams SET is_live = ?", (number))
+
+async def get_url_stream():
+    async with aiosqlite.connect(DB_NAME) as db:
+        async with db.execute("SELECT * FROM streams") as cursor:
+            result = (await cursor.fetchone())[0]
+            if result:
+                return result
+
+async def edit_url_stream(url):
+    async with aiosqlite.connect(DB_NAME) as db:
+        await db.execute("UPDATE streams SET is_live = ? WHERE url = ?", (url, ))
+        await db.commit()
 
 
 
