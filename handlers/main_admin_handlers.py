@@ -55,7 +55,7 @@ async def back_start(callback: CallbackQuery):
 @router.callback_query(F.data == "check_stream")
 async def send_state_stream(callback: CallbackQuery):
     url_keyboard = InlineKeyboardBuilder.from_markup(await get_url())
-    back_keyboard = InlineKeyboardBuilder.from_markup(await kb.return_start_keyboard())
+    back_keyboard = InlineKeyboardBuilder.from_markup(kb.return_start_keyboard())
     keyboard = url_keyboard.attach(back_keyboard)
     keyboard = keyboard.as_markup()
     state_stream = await fc.is_live()
