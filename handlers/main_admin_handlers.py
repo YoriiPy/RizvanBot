@@ -56,13 +56,15 @@ async def back_start(callback: CallbackQuery):
 async def send_state_stream(callback: CallbackQuery):
     url_keyboard = InlineKeyboardBuilder.from_markup(await get_url())
     back_keyboard = InlineKeyboardBuilder.from_markup(kb.return_start_keyboard())
-    keyboard = url_keyboard.attach(back_keyboard)
-    keyboard = keyboard.as_markup()
+
     state_stream = await fc.is_live()
     if state_stream:
+        keyboard = url_keyboard.attach(back_keyboard)
+        keyboard = keyboard.as_markup()
         await callback.message.edit_text("✅ Стрим идет\nМожешь заходить", reply_markup=keyboard)
     else:
-        await callback.message.edit_text("❌ Стрим выключен", reply_markup=keyboard)
+
+        await callback.message.edit_text("❌ Стрим выключен", reply_markup=back_keyboard.as_markup())
 
 # ДОБАВЛЕНИЕ АДМИНОВ И ГЛАВ АДМИНОВ
 @router.callback_query(F.data == "add_main_admin")
