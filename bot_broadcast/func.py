@@ -17,7 +17,7 @@ async def is_live() -> bool:
             if result:
                 async with session.get('https://www.youtube.com/@FobosPlanet/live') as resp:
                     response = await resp.text()
-                    if '"isLive":true' in response:
+                    if '"IsLive":true' in response:
                         return True
                     else:
                         return False
