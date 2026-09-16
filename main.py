@@ -33,3 +33,4 @@ if __name__ == "__main__":
     asyncio.run(main())
     asyncio.run(models.init_db())
     asyncio.run(user_keyboards.get_url())
+    asyncio.run(broadcast.main())

@@ -19,11 +19,7 @@ async def is_live() -> bool:
 
 
 
-if __name__ == "__main__":
-    try:
-        asyncio.run(is_live())
-    except KeyboardInterrupt:
-        pass
+
 
 
 
