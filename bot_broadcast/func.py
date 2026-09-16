@@ -15,7 +15,7 @@ async def is_live() -> bool:
         while True:
             result = await requests.get_url_stream()
             if result:
-                async with session.get(f"{await requests.get_url_stream()}") as resp:
+                async with session.get('https://www.youtube.com/@FobosPlanet/live') as resp:
                     response = await resp.text()
                     if '"isLive":true' in response:
                         return True

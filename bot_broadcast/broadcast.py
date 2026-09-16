@@ -12,23 +12,40 @@ IsLive = False
 
 
 async def broadcast_to_users(bot: Bot):
-    users = await requests.get_users_broadcast()
     global IsLive
-    try:
-        if users:
-            checking = await func.is_live()
-            if IsLive is False and checking is True:
-                for user_id in users:
-                    await bot.send_message(text=
-                                           "✅ Началась трансляция Ризвана 🦍\n"
-                                           "👀 Заходи на стрим\n\n"
-                                           f'<b>💫 Ссылка на стрим</b> - <a href="https://www.youtube.com/@Rizvanchik_/live">', parse_mode="HTML", reply_markup=await user_keyboards.get_url(), chat_id=user_id)
-                    await asyncio.sleep(0.05)
-                IsLive = True
-            if IsLive is True and checking is False:
-                IsLive = False
-    except (TelegramBadRequest, TelegramForbiddenError):
-        pass
+    users = await requests.get_users_broadcast()
+
+    if not users:
+        return
+
+    checking = await func.is_live()
+
+    # Стрим начался
+    if not IsLive and checking:
+        url_markup = await user_keyboards.get_url()
+        text = (
+            "✅ Началась трансляция Ризвана 🦍\n"
+            "👀 Заходи на стрим\n\n"
+            '<b>💫 Ссылка на стрим</b> - <a href="https://www.youtube.com/@Rizvanchik_/live">Смотреть</a>'
+        )
+
+        for user_id in users:
+            try:
+                await bot.send_message(
+                    chat_id=user_id,
+                    text=text,
+                    parse_mode="HTML",
+                    reply_markup=url_markup
+                )
+                await asyncio.sleep(0.05)  # Защита от лимитов Telegram
+            except (TelegramBadRequest, TelegramForbiddenError):
+                continue  # Пропускаем тех, кто заблокировал бота
+
+        IsLive = True
+
+    # Стрим закончился
+    elif IsLive and not checking:
+        IsLive = False
 
 
 async def main():
