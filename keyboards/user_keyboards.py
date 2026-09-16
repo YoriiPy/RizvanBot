@@ -7,3 +7,8 @@ async def get_url():
     keyboard = InlineKeyboardBuilder()
     keyboard.button(text="Стрим 🦍", url=f"{url}")
     return keyboard.as_markup()
+
+async def get_keyboard():
+    keyboard = InlineKeyboardBuilder()
+    keyboard.button(text="👀 Состояние стрима", callback_data="check_stream")
+    return keyboard.as_markup()

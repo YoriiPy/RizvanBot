@@ -65,7 +65,7 @@ async def search_user(user_id: int):
                 return True
 async def search_admin(user_id: int):
     async with aiosqlite.connect(DB_NAME) as db:
-        async with db.execute("SELECT 1 FROM user WHERE class = ?", ('admin',)) as cursor:
+        async with db.execute("SELECT 1 FROM users WHERE class = ?", ('admin',)) as cursor:
             result = await cursor.fetchone()
             if result == 1:
                 return True
@@ -73,7 +73,7 @@ async def search_admin(user_id: int):
 async def search_main_admin(user_id: int):
     async with aiosqlite.connect(DB_NAME) as db:
         async with aiosqlite.connect(DB_NAME) as db:
-            await db.execute("SELECT 1 FROM user WHERE class = ?", ('main_admin',))
+            await db.execute("SELECT 1 FROM users WHERE class = ?", ('main_admin',))
 
 
 
