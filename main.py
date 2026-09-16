@@ -4,7 +4,7 @@ from handlers import user_handlers, admin_handlers, main_admin_handlers
 from database import models
 from bot_broadcast import broadcast
 from keyboards import user_keyboards
-
+from handlers.user_handlers import router
 import os
 import asyncio
 
@@ -22,9 +22,7 @@ async def main():
     bot = Bot(token=BOT_TOKEN)
     dispatcher = Dispatcher()
 
-    dispatcher.include_router(broadcast.router)
-    dispatcher.include_router(user_handlers.router)
-    dispatcher.include_router(main_admin_handlers.router)
+    dispatcher.include_router(router)
     # 3. Запускаем бесконечный опрос серверов Telegram
     await dispatcher.start_polling(bot)
 

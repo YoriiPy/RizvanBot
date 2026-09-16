@@ -10,8 +10,8 @@ from keyboards.user_keyboards import get_url
 from keyboards import user_keyboards as userkb
 from states import main_admin_state as st
 from database import requests as rq
-
-router = Router()
+from handlers.user_handlers import router
+router = router
 
 # ПОМЕНЯТЬ URL
 @router.callback_query(F.data == "edit_stream_url")
@@ -44,7 +44,7 @@ async def update_url(message: Message, state: FSMContext, bot: Bot):
 
 @router.callback_query(F.data == "back_start")
 async def back_start(callback: CallbackQuery):
-
+    await callback.answer()
     if await search_main_admin(callback.from_user.id):
         await callback.message.edit_text(
             "🦍 Вас приветствует бот Ризвана\n"

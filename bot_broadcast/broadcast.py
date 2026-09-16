@@ -22,7 +22,7 @@ async def broadcast_to_users(bot: Bot):
                     await bot.send_message(text=
                                            "✅ Началась трансляция Ризвана 🦍\n"
                                            "👀 Заходи на стрим\n\n"
-                                           f'<b>💫 Ссылка на стрим</b> - <a href="https://www.youtube.com/@Rizvanchik_/live">', parse_mode="HTML", reply_markup=user_keyboards.get_url(), chat_id=user_id)
+                                           f'<b>💫 Ссылка на стрим</b> - <a href="https://www.youtube.com/@Rizvanchik_/live">', parse_mode="HTML", reply_markup=await user_keyboards.get_url(), chat_id=user_id)
                     await asyncio.sleep(0.05)
                 IsLive = True
             if IsLive is True and checking is False:
