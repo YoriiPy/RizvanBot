@@ -12,7 +12,7 @@ async def init_db():
                         ''')
         await db.commit()
 
-        await db.execute('''CREATE TABLE IF NOT EXISTS users(
+        await db.execute('''CREATE TABLE IF NOT EXISTS users(                    
                                 user_id TEXT PRIMARY KEY,
                                 username TEXT ,
                                 broadcast INTEGER DEFAULT 1,

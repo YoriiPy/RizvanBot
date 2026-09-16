@@ -10,6 +10,7 @@ import asyncio
 router = Router()
 IsLive = False
 
+
 async def broadcast_to_users(bot: Bot):
     users = await requests.get_users_broadcast()
     global IsLive
@@ -36,3 +37,4 @@ async def main():
     scheduler.start()
     while True:
         await asyncio.sleep(1)
+
