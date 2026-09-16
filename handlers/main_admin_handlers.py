@@ -88,7 +88,7 @@ async def wait_send_admin(callback: CallbackQuery, state: FSMContext):
 
 @router.callback_query(F.text == "add_admin")
 async def wait_send_admin(callback: CallbackQuery, state: FSMContext):
-    await callback.message.edit_text("👤 Отправьте ID для добавления в main admin", reply_markup=kb.return_start_keyboard())
+    await callback.message.answer("👤 Отправьте ID для добавления в main admin", reply_markup=kb.return_start_keyboard())
     await state.set_state(st.states.wait_new_main_admin)
 
 @router.message(st.states.wait_new_main_admin)
