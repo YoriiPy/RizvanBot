@@ -40,9 +40,14 @@ async def get_url_stream():
 
 async def edit_url_stream(url: str):
     async with aiosqlite.connect(DB_NAME) as db:
+        async with db.execute("SELECT * FROM streams") as cursor:
+            result = await cursor.fetchone()
+            if result:
+                await db.execute("UPDATE streams SET url = ?", (url, ))
+                await db.commit()
+            else:
+                await db.execute("INSERT INTO streams VALUES (?)", (url, ))
 
-        await db.execute("UPDATE streams SET url = ?", (url, ))
-        await db.commit()
 # ДОБАВЛЕНИЕ
 async def add_admin(user_id: int, username: str):
     async with aiosqlite.connect(DB_NAME) as db:
