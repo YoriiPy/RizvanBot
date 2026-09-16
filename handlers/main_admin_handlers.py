@@ -7,6 +7,7 @@ from bot_broadcast import func as fc
 from database.requests import search_user, search_admin, search_main_admin
 from keyboards import main_admin_keyboards as kb
 from keyboards.user_keyboards import get_url
+from keyboards import user_keyboards as userkb
 from states import main_admin_state as st
 from database import requests as rq
 
@@ -40,16 +41,28 @@ async def update_url(message: Message, state: FSMContext, bot: Bot):
         await message.answer("❌ Отправьте строку", reply_markup=kb.return_start_keyboard())
         await state.clear()
 
+
 @router.callback_query(F.data == "back_start")
 async def back_start(callback: CallbackQuery):
-    if await search_user(callback.from_user.id) or await search_admin(callback.from_user.id):
-        await callback.message.edit_text("🦍 Вас приветствует бот Ризвана\n"
-                             "💫 Я сообщу когда начнется стрим\n"
-                             "🚀 Вы не пропустите ни одного стрима")
-    elif await search_main_admin(callback.from_user.id):
-        await callback.message.edit_text("🦍 Вас приветствует бот Ризвана\n"
-                             "💫 Я сообщу когда начнется стрим\n"
-                             "🚀 Вы не пропустите ни одного стрима", reply_markup=kb.start_keyboard())
+
+    if await search_main_admin(callback.from_user.id):
+        await callback.message.edit_text(
+            "🦍 Вас приветствует бот Ризвана\n"
+            "💫 Я сообщу когда начнется стрим\n"
+            "🚀 Вы не пропустите ни одного стрима",
+            reply_markup=kb.start_keyboard()  # Клавиатура главного админа
+        )
+
+
+    elif await search_user(callback.from_user.id) or await search_admin(callback.from_user.id):
+        await callback.message.edit_text(
+            "🦍 Вас приветствует бот Ризвана\n"
+            "💫 Я сообщу когда начнется стрим\n"
+            "🚀 Вы не пропустите ни одного стрима",
+            reply_markup=await userkb.get_keyboard()
+        )
+
+
 # СТРИМ
 
 @router.callback_query(F.data == "check_stream")
@@ -68,6 +81,11 @@ async def send_state_stream(callback: CallbackQuery):
 
 # ДОБАВЛЕНИЕ АДМИНОВ И ГЛАВ АДМИНОВ
 @router.callback_query(F.data == "add_main_admin")
+async def wait_send_admin(callback: CallbackQuery, state: FSMContext):
+    await callback.message.edit_text("👤 Отправьте ID для добавления в main admin", reply_markup=kb.return_start_keyboard())
+    await state.set_state(st.states.wait_new_main_admin)
+
+@router.callback_query(F.text == "add_admin")
 async def wait_send_admin(callback: CallbackQuery, state: FSMContext):
     await callback.message.edit_text("👤 Отправьте ID для добавления в main admin", reply_markup=kb.return_start_keyboard())
     await state.set_state(st.states.wait_new_main_admin)
