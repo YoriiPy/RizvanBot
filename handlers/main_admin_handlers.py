@@ -10,7 +10,7 @@ from keyboards.user_keyboards import get_url
 from keyboards import user_keyboards as userkb
 from states import main_admin_state as st
 from database import requests as rq
-from handlers.user_handlers import router
+
 router = Router()
 
 # ПОМЕНЯТЬ URL

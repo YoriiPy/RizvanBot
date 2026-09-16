@@ -81,8 +81,9 @@ async def search_admin(user_id: int):
 async def search_main_admin(user_id: int):
     async with aiosqlite.connect(DB_NAME) as db:
 
-        async with db.execute("SELECT 1 FROM users WHERE class = ?", ('main_admin',)) as cursor:
+        async with db.execute("SELECT 1 FROM users WHERE class = ? AND user_id = ?", ('main_admin', )) as cursor:
             result = await cursor.fetchone()
+            return result
 
 
 
