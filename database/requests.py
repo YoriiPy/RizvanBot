@@ -65,25 +65,33 @@ async def add_user(user_id: int, username: str) -> None:
         await db.execute('''INSERT OR IGNORE INTO users (user_id, username) VALUES (?,?)''', (user_id, username))
         await db.commit()
 # ПОИСК
-async def search_user(user_id: int):
+# ПОИСК
+async def search_user(user_id: int) -> bool:
     async with aiosqlite.connect(DB_NAME) as db:
-        async with db.execute("SELECT 1 FROM users WHERE user_id = ? AND user_id = ?", ('user', user_id)) as cursor:
+        async with db.execute(
+            "SELECT 1 FROM users WHERE class = ? AND user_id = ?",
+            ('user', str(user_id))
+        ) as cursor:
             result = await cursor.fetchone()
-            if result == 1:
-                return True
-async def search_admin(user_id: int):
-    async with aiosqlite.connect(DB_NAME) as db:
-        async with db.execute("SELECT 1 FROM users WHERE class = ? AND user_id", ('admin', user_id)) as cursor:
-            result = await cursor.fetchone()
-            if result == 1:
-                return True
+            return result is not None
 
-async def search_main_admin(user_id: int):
+async def search_admin(user_id: int) -> bool:
     async with aiosqlite.connect(DB_NAME) as db:
-
-        async with db.execute("SELECT 1 FROM users WHERE class = ? AND user_id = ?", ('main_admin', user_id)) as cursor:
+        async with db.execute(
+            "SELECT 1 FROM users WHERE class = ? AND user_id = ?",
+            ('admin', str(user_id))
+        ) as cursor:
             result = await cursor.fetchone()
-            return result
+            return result is not None
+
+async def search_main_admin(user_id: int) -> bool:
+    async with aiosqlite.connect(DB_NAME) as db:
+        async with db.execute(
+            "SELECT 1 FROM users WHERE class = ? AND user_id = ?",
+            ('main_admin', str(user_id))
+        ) as cursor:
+            result = await cursor.fetchone()
+            return result is not None
 
 
 
