@@ -40,8 +40,9 @@ async def get_url_stream():
             if result:
                 return result
 
-async def edit_url_stream(url):
+async def edit_url_stream(url: str):
     async with aiosqlite.connect(DB_NAME) as db:
+
         await db.execute("UPDATE streams SET url = ?", (url, ))
         await db.commit()
 
