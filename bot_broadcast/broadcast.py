@@ -4,7 +4,7 @@ from aiogram.types import Message
 from database import requests
 from keyboards import  user_keyboards
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-import func
+from bot_broadcast import func
 import asyncio
 
 router = Router()
