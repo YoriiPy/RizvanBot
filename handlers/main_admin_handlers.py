@@ -18,7 +18,7 @@ async def data_url(callback: CallbackQuery, state: FSMContext):
 @router.message(st.states.wait_new_url)
 async def update_url(message: Message, state: FSMContext):
     URL = message.text
-    if URL.isdigit():
+    if not URL.isdigit():
         await rq.edit_url_stream(URL)
         await message.answer("✅ Успешно сохранено", reply_markup=kb.return_start_keyboard())
         await state.clear()
