@@ -16,4 +16,4 @@ async def start_command(message: Message):
         return
     await message.answer("🦍 Вас приветствует бот Ризвана\n"
                          "💫 Я сообщу когда начнется стрим\n"
-                         "🚀 Вы не пропустите ни одного стрима", reply_markup=mdkb.start_keyboard())
+                         "🚀 Вы не пропустите ни одного стрима", reply_markup=await mdkb.start_keyboard())
