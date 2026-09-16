@@ -63,3 +63,18 @@ async def send_state_stream(callback: CallbackQuery):
         await callback.message.edit_text("✅ Стрим идет\nМожешь заходить", reply_markup=keyboard)
     else:
         await callback.message.edit_text("❌ Стрим выключен", reply_markup=keyboard)
+
+# ДОБАВЛЕНИЕ АДМИНОВ И ГЛАВ АДМИНОВ
+@router.callback_query(F.data == "add_main_admin")
+async def wait_send_admin(callback: CallbackQuery, state: FSMContext):
+    await callback.message.edit_text("👤 Отправьте ID для добавления в main admin", reply_markup=kb.return_start_keyboard())
+    await state.set_state(st.states.wait_new_main_admin)
+
+@router.message(st.states.wait_new_main_admin)
+async def add_main_admin_to_users(message: Message):
+    user_id = message.from_user.id
+    if await search_user(user_id) or await search_admin(user_id):
+        await rq.add_main_admin(message.from_user.id)
+        await message.answer("✅ Успешно добавлен")
+    else:
+        await message.answer("❌ Такого пользователя не существует")
