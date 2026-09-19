@@ -25,7 +25,7 @@ async def get_users_broadcast() -> bool | list[tuple[int]]:
             if users:
                 list_user_id = [int(row[0]) for row in users]
                 return list_user_id
-            return False
+            return []
 # СТРИМ
 async def update_state_stream(number):
     async with aiosqlite.connect(DB_NAME) as db:

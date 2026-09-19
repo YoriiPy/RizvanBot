@@ -1,3 +1,4 @@
+import datetime
 import os
 
 import dotenv
@@ -55,11 +56,11 @@ async def broadcast_to_users(bot: Bot):
 
 
 async def main():
-    load_dotenv()
+    load_dotenv("../.env")
     TOKEN = os.getenv("BOT_TOKEN")
     bot = Bot(token=TOKEN)
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(func=broadcast_to_users, trigger="interval", seconds=60, kwargs={"bot": bot})
+    scheduler.add_job(func=broadcast_to_users, trigger="interval", seconds=60, kwargs={"bot": bot}, next_run_time=datetime.datetime.now())
     scheduler.start()
     while True:
         await asyncio.sleep(1)
