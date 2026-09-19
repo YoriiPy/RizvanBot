@@ -28,7 +28,7 @@ async def broadcast_to_users(bot: Bot):
     # Стрим начался
     if not IsLive and checking:
         url_markup = await user_keyboards.get_url()
-        channel_name = rq.get_channel_name()
+        channel_name = await rq.get_channel_name()
         text = (
             "✅ Началась трансляция Ризвана 🦍\n"
             "👀 Заходи на стрим\n\n"
@@ -55,6 +55,7 @@ async def broadcast_to_users(bot: Bot):
 
 
 async def main():
+    load_dotenv()
     TOKEN = os.getenv("BOT_TOKEN")
     bot = Bot(token=TOKEN)
     scheduler = AsyncIOScheduler()
