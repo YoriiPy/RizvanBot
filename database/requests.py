@@ -38,7 +38,7 @@ async def get_channel_name():
             if result is None:
                 await db.execute("INSERT INTO streams (url) VALUES (?)", ("Rizvanchik_", ))
                 await db.commit()
-                return "https://www.youtube.com/@Rizvanchik_/live"
+                return "Rizvanchik_"
             return result[0]
 
 async def edit_url_stream(url: str):
