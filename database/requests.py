@@ -21,9 +21,9 @@ async def get_user_broadcast(user_id: int) -> bool:
 async def get_users_broadcast() -> bool | list[tuple[int]]:
     async with aiosqlite.connect(DB_NAME) as db:
         async with db.execute('''SELECT user_id FROM users WHERE broadcast = 1''') as cursor:
-            result = await cursor.fetchone()
-            if result:
-                list_user_id = [result[0] for result in result]
+            users = await cursor.fetchall()
+            if users:
+                list_user_id = [int(row[0]) for row in users]
                 return list_user_id
             return False
 # СТРИМ
