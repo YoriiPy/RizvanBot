@@ -15,19 +15,17 @@ async def is_live() -> bool:
         "CONSENT": "PENDING+999",
     }
     async with aiohttp.ClientSession(headers=HEADERS) as session:
+        channel_name = await rq.get_channel_name()
+        if channel_name:
+             async with session.get(f'https://www.youtube.com/@{channel_name}/live', cookies=cookies) as resp:
 
-        while True:
-            channel_name = await rq.get_channel_name()
-            if channel_name:
-                async with session.get(f'https://www.youtube.com/@{channel_name}/live', cookies=cookies) as resp:
-
-                    final_url = str(resp.url)
-                    has_video_redirect = "watch?v=" in final_url
-                    html = await resp.text()
-                    if '"isLive":true' in html or has_video_redirect:
-                        return True
-                    else:
-                        return False
+                final_url = str(resp.url)
+                has_video_redirect = "watch?v=" in final_url
+                html = await resp.text()
+                if '"isLive":true' in html or has_video_redirect:
+                    return True
+                else:
+                    return False
 
 
 
