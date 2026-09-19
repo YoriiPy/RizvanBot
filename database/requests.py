@@ -64,7 +64,7 @@ async def add_main_admin(user_id: int, username: str):
 
 async def add_user(user_id: int, username: str) -> None:
     async with aiosqlite.connect(DB_NAME) as db:
-        await db.execute('''INSERT OR IGNORE INTO users (user_id, username, broadcast) VALUES (?,?)''', (user_id, username, 1))
+        await db.execute('''INSERT OR IGNORE INTO users (user_id, username, broadcast) VALUES (?,?,?)''', (user_id, username, 1))
         await db.commit()
 # ПОИСК
 # ПОИСК
