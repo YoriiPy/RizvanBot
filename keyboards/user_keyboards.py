@@ -5,7 +5,7 @@ import asyncio
 async def get_url():
     url = await rq.get_channel_name()
     keyboard = InlineKeyboardBuilder()
-    keyboard.button(text="Стрим 🦍", url=f"{url}")
+    keyboard.button(text="Стрим 🦍", url=f"https://youtube.com/@{url}/live")
     return keyboard.as_markup()
 
 async def get_keyboard():
