@@ -15,10 +15,11 @@ import asyncio
 
 router = Router()
 IsLive = False
-
+db = False
 
 async def broadcast_to_users(bot: Bot):
-    await models.init_db()
+    if db is False:
+        await models.init_db()
     global IsLive
     users = await rq.get_users_broadcast()
 
@@ -63,6 +64,5 @@ async def main():
     scheduler = AsyncIOScheduler()
     scheduler.add_job(func=broadcast_to_users, trigger="interval", seconds=60, kwargs={"bot": bot}, next_run_time=datetime.datetime.now())
     scheduler.start()
-    while True:
-        await asyncio.sleep(1)
+    await asyncio.Event().wait()
 
