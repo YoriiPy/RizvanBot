@@ -26,11 +26,11 @@ async def main():
     dispatcher.include_router(user_router)
     dispatcher.include_router(admin_router)
     # 3. Запускаем бесконечный опрос серверов Telegram
+    dispatcher.startup.register(broadcast.main())
     await dispatcher.start_polling(bot)
 
 
 if __name__ == "__main__":
-    asyncio.run(models.init_db())
     asyncio.run(main())
-    asyncio.run(broadcast.main())
+
 

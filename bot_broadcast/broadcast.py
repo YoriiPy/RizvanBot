@@ -7,7 +7,7 @@ from aiogram.exceptions import TelegramBadRequest, TelegramForbiddenError
 from aiogram.types import Message
 from dotenv import load_dotenv
 
-from database import requests as rq
+from database import requests as rq, models
 from keyboards import  user_keyboards
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from bot_broadcast import func
@@ -18,6 +18,7 @@ IsLive = False
 
 
 async def broadcast_to_users(bot: Bot):
+    await models.init_db()
     global IsLive
     users = await rq.get_users_broadcast()
 
