@@ -55,10 +55,12 @@ async def edit_url_stream(url: str):
 async def add_admin(user_id: int, username: str):
     async with aiosqlite.connect(DB_NAME) as db:
         await db.execute("UPDATE users SET class = ? WHERE user_id = ?", ('admin',user_id))
+        await db.commit()
 
 async def add_main_admin(user_id: int, username: str):
     async with aiosqlite.connect(DB_NAME) as db:
         await db.execute("UPDATE users SET class = ? WHERE user_id = ?", ('main_admin',user_id))
+        await db.commit()
 
 async def add_user(user_id: int, username: str) -> None:
     async with aiosqlite.connect(DB_NAME) as db:
@@ -73,7 +75,10 @@ async def search_user(user_id: int) -> bool:
             ('user', str(user_id))
         ) as cursor:
             result = await cursor.fetchone()
-            return result is not None
+            if result:
+                return result
+            else:
+                return False
 
 async def search_admin(user_id: int) -> bool:
     async with aiosqlite.connect(DB_NAME) as db:
@@ -82,16 +87,22 @@ async def search_admin(user_id: int) -> bool:
             ('admin', str(user_id))
         ) as cursor:
             result = await cursor.fetchone()
-            return result is not None
+            if result:
+                return True
+            else:
+                return False
 
 async def search_main_admin(user_id: int) -> bool:
     async with aiosqlite.connect(DB_NAME) as db:
         async with db.execute(
-            "SELECT 1 FROM users WHERE class = ? AND user_id = ?",
+            "SELECT user_id FROM users WHERE class = ? AND user_id = ?",
             ('main_admin', str(user_id))
         ) as cursor:
             result = await cursor.fetchone()
-            return result is not None
+            if result:
+                return True
+            else:
+                return False
 
 
 

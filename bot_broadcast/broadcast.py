@@ -1,6 +1,11 @@
+import os
+
+import dotenv
 from aiogram import Bot, Router
 from aiogram.exceptions import TelegramBadRequest, TelegramForbiddenError
 from aiogram.types import Message
+from dotenv import load_dotenv
+
 from database import requests
 from keyboards import  user_keyboards
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -49,8 +54,10 @@ async def broadcast_to_users(bot: Bot):
 
 
 async def main():
+    TOKEN = os.getenv("BOT_TOKEN")
+    bot = Bot(token=TOKEN)
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(func=broadcast_to_users, trigger="interval", seconds=60)
+    scheduler.add_job(func=broadcast_to_users, trigger="interval", seconds=60, kwargs={"bot": bot})
     scheduler.start()
     while True:
         await asyncio.sleep(1)
