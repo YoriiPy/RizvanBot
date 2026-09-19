@@ -78,7 +78,7 @@ async def send_state_stream(callback: CallbackQuery):
         channel_name = rq.get_channel_name()
         await callback.message.edit_text(
                                     "✅ Стрим идет\n"
-                                        f'<a href="https://www.youtube.com/@{channel_name}/live">💫 Ссылка на стрим</a>',
+                                        f'💫 <a href="https://www.youtube.com/@{channel_name}/live">Ссылка на стрим</a>',
                                         reply_markup=keyboard, parse_mode="HTML")
     else:
 
