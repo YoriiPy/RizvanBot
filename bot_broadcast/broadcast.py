@@ -6,7 +6,7 @@ from aiogram.exceptions import TelegramBadRequest, TelegramForbiddenError
 from aiogram.types import Message
 from dotenv import load_dotenv
 
-from database import requests
+from database import requests as rq
 from keyboards import  user_keyboards
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from bot_broadcast import func
@@ -18,7 +18,7 @@ IsLive = False
 
 async def broadcast_to_users(bot: Bot):
     global IsLive
-    users = await requests.get_users_broadcast()
+    users = await rq.get_users_broadcast()
 
     if not users:
         return
@@ -28,10 +28,11 @@ async def broadcast_to_users(bot: Bot):
     # Стрим начался
     if not IsLive and checking:
         url_markup = await user_keyboards.get_url()
+        channel_name = rq.get_channel_name()
         text = (
             "✅ Началась трансляция Ризвана 🦍\n"
             "👀 Заходи на стрим\n\n"
-            '<b>💫 Ссылка на стрим</b> - <a href="https://www.youtube.com/@Rizvanchik_/live">Смотреть</a>'
+            f'<b>💫 Ссылка на стрим</b> - <a href="https://www.youtube.com/@{channel_name}/live">Смотреть</a>'
         )
 
         for user_id in users:

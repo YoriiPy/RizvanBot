@@ -31,14 +31,14 @@ async def update_state_stream(number):
     async with aiosqlite.connect(DB_NAME) as db:
         await db.execute("UPDATE streams SET is_live = ?", (number))
 
-async def get_url_stream():
+async def get_channel_name():
     async with aiosqlite.connect(DB_NAME) as db:
         async with db.execute("SELECT * FROM streams") as cursor:
             result = await cursor.fetchone()
             if result is None:
-                await db.execute("INSERT INTO streams (url) VALUES (?)", ("https://www.youtube.com/BigJetTV/live", ))
+                await db.execute("INSERT INTO streams (url) VALUES (?)", ("Rizvanchik_", ))
                 await db.commit()
-                return "https://www.youtube.com/BigJetTV/live"
+                return "https://www.youtube.com/@Rizvanchik_/live"
             return result[0]
 
 async def edit_url_stream(url: str):
