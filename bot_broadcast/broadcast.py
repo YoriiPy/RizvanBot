@@ -60,15 +60,24 @@ async def broadcast_to_users(bot: Bot):
 
 
         broadcast = True
-
+        xz = 0
 
         while broadcast and live:
             url_markup = await user_keyboards.get_url()
-            message1 = await bot.send_message(chat_id=-1004372478435, text=
-                                                                            f'❌ Не зашел на стрим\n'
-                                                                            f'🥲 Фатальная ошибка\n'
-                                                                            f'🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML", reply_markup=url_markup
-                                            )
+            if xz == 0:
+                xz = 1
+                message1 = await bot.send_message(chat_id=-1004372478435, text=
+                                                                                f'✅ Начался стрим\n'
+                                                                                f'🤖 Меня написал Гасан\n'
+                                                                                f'🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML", reply_markup=url_markup
+                                                )
+                x = 1
+
+            else:
+                message1 = await bot.send_message(chat_id=-1004372478435, text=
+                                                                                "🤦 Не зашел на стрим\n"
+                                                                                "❌ Фатальная ошибка"
+                                                                                'f🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML", reply_markup=url_markup)
             lists.append(message1)
             live = await func.is_live()
             if not live:
@@ -90,6 +99,7 @@ async def broadcast_to_users(bot: Bot):
 
         # Сбрасываем флаг ОДИН РАЗ после того, как цикл завершился:
         lists.clear()
+        xz = 0
         broadcast = False
 
 
