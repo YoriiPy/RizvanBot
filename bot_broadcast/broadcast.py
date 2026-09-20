@@ -74,7 +74,6 @@ async def broadcast_to_users(bot: Bot):
 
     # Стрим закончился
     if broadcast and not live:
-        global lists
 
         # Создаём список прямо с сообщениями:
 
