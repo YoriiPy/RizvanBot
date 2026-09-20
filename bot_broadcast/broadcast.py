@@ -13,25 +13,26 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from bot_broadcast import func
 import asyncio
 
+lists = []
 router = Router()
-IsLive = False
+broadcast = False
 db = False
 
 async def broadcast_to_users(bot: Bot):
-    global db
+    global db, lists
     if db is False:
         await models.init_db()
         db = True
-    global IsLive
+    global broadcast
     users = await rq.get_users_broadcast()
 
     if not users:
         return
 
-    checking = await func.is_live()
+    live = await func.is_live()
 
     # Стрим начался
-    if not IsLive and checking:
+    if not broadcast and live:
         url_markup = await user_keyboards.get_url()
         channel_name = await rq.get_channel_name()
         text = (
@@ -50,13 +51,51 @@ async def broadcast_to_users(bot: Bot):
                 )
                 await asyncio.sleep(0.05)  # Защита от лимитов Telegram
             except (TelegramBadRequest, TelegramForbiddenError):
-                continue  # Пропускаем тех, кто заблокировал бота
+                continue
 
-        IsLive = True
+
+            # Пропускаем тех, кто заблокировал бота
+
+
+
+
+        broadcast = True
+
+
+        while broadcast and live:
+            global lists
+            message1 = await bot.send_message(chat_id=-1002198546061, text=text, parse_mode="HTML")
+            message2 = await bot.send_message(chat_id=-1002179134100, text=text, parse_mode="HTML")
+            lists.append(message1)
+            lists.append(message2)
+            live = await func.is_live()
+            if not live:
+                break
+            await asyncio.sleep(2400)
 
     # Стрим закончился
-    elif IsLive and not checking:
-        IsLive = False
+    if broadcast and not live:
+        global lists
+
+        # Создаём список прямо с сообщениями:
+
+
+        # Проходимся по каждому сообщению по очереди:
+        for msg in lists:
+            try:
+                await bot.delete_message(chat_id=msg.chat.id, message_id=msg.message_id)
+            except Exception:
+                pass
+
+        # Сбрасываем флаг ОДИН РАЗ после того, как цикл завершился:
+        lists.clear()
+        broadcast = False
+
+
+
+
+
+
 
 
 async def main():
