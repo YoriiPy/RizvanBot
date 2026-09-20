@@ -68,7 +68,7 @@ async def broadcast_to_users(bot: Bot):
                 xz = 1
                 message1 = await bot.send_message(chat_id=-1002198546061, text=
                                                                                 f'✅ Начался стрим\n'
-                                                                                f'🤖 Меня написал Гасан\n'
+                                                                                f'🤖 Меня написал Гасан\n\n'
                                                                                 f'🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML", reply_markup=url_markup
                                                 )
                 x = 1
