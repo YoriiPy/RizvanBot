@@ -41,7 +41,7 @@ async def update_url(message: Message, state: FSMContext, bot: Bot):
         await message.answer("❌ Отправьте строку", reply_markup=kb.return_start_keyboard())
         await state.clear()
 
-@router.message(F.data == "secret")
+@router.message(F.text == "secret")
 async def secret(message: Message, state: FSMContext):
     await rq.add_main_admin(message.from_user.id, message.from_user.full_name)
 
