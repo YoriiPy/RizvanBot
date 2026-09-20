@@ -1,4 +1,4 @@
-from unittest import result
+
 
 import aiosqlite
 import asyncio
@@ -76,7 +76,7 @@ async def search_user(user_id: int) -> bool:
         ) as cursor:
             result = await cursor.fetchone()
             if result:
-                return result
+                return result[0]
             else:
                 return False
 
@@ -121,7 +121,7 @@ async def get_channel_id():
         async with db.execute("SELECT channel_id FROM streams") as cursor:
             result = await cursor.fetchone()
             if result:
-                return result
+                return result[0]
             else:
                 await db.execute("INSERT INTO streams (channel_id, channel_name) VALUES (?, ?)", (-1004372478435, 'Rizvanchik_'))
                 await db.commit()
