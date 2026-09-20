@@ -7,7 +7,7 @@ async def init_db():
     async with aiosqlite.connect(DB_NAME) as db:
         await db.execute('''CREATE TABLE IF NOT EXISTS streams(
                                 channel_name TEXT PRIMARY KEY,
-                                channel_id INTEGER NOT NULL
+                                channel_id TEXT NOT NULL
                                 )
                         ''')
         await db.commit()

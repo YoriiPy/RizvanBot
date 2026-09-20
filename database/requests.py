@@ -110,7 +110,7 @@ async def edit_channel_id(channel_id: int):
         async with db.execute("SELECT * FROM streams") as cursor:
             result = await cursor.fetchone()
             if not result:
-                await db.execute("INSERT INTO streams (channel_id, channel_name) VALUES (?)", (channel_id, 'Rizvanchik_'))
+                await db.execute("INSERT INTO streams (channel_id, channel_name) VALUES (?, ?)", (channel_id, 'Rizvanchik_'))
                 await db.commit()
                 return
         await db.execute("UPDATE streams SET channel_id = ?", (channel_id, ))
@@ -123,7 +123,7 @@ async def get_channel_id():
             if result:
                 return result
             else:
-                await db.execute("INSERT INTO streams (channel_id, channel_name) VALUES (?)", (-1004372478435, 'Rizvanchik_'))
+                await db.execute("INSERT INTO streams (channel_id, channel_name) VALUES (?, ?)", (-1004372478435, 'Rizvanchik_'))
                 await db.commit()
 
 
