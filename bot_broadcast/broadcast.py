@@ -64,9 +64,7 @@ async def broadcast_to_users(bot: Bot):
 
         while broadcast and live:
             message1 = await bot.send_message(chat_id=-1002198546061, text=text, parse_mode="HTML")
-            message2 = await bot.send_message(chat_id=-1002179134100, text=text, parse_mode="HTML")
             lists.append(message1)
-            lists.append(message2)
             live = await func.is_live()
             if not live:
                 break
