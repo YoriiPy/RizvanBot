@@ -21,7 +21,7 @@ async def is_live() -> bool:
                 if resp.status != 200:
                     return False
 
-                chunk = await resp.content.read(8192)
+                chunk = await resp.content.read(819200)
                 chunk = chunk.decode("utf-8", errors="ignore")
 
                 if '"isLive":true' in chunk:
