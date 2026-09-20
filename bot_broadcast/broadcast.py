@@ -35,7 +35,7 @@ async def broadcast_to_users(bot: Bot):
 
     # Стрим начался
     if not broadcast and live:
-        url_markup = await user_keyboards.get_url()
+        url_markup = await userkb.get_url()
         channel_name = await rq.get_channel_name()
         text = (
             "✅ Началась трансляция Ризвана 🦍\n"
