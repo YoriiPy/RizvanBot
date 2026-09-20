@@ -18,11 +18,12 @@ async def is_live() -> bool:
         channel_name = await rq.get_channel_name()
         if channel_name:
              async with session.get(f'https://www.youtube.com/@{channel_name}/live', cookies=cookies) as resp:
+                if resp.status != 200:
+                    return False
 
-                final_url = str(resp.url)
-                has_video_redirect = "watch?v=" in final_url
-                html = await resp.text()
-                if '"isLive":true' in html or has_video_redirect:
+                chunk = await resp.content.read(40960)
+
+                if b'"isLive":true' in chunk:
                     return True
                 else:
                     return False

@@ -62,6 +62,9 @@ async def broadcast_to_users(bot: Bot):
 
 
     if xz == 40:
+        url_markup = await userkb.get_url()
+        channel_name = await rq.get_channel_name()
+
         message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
         "🤦 Не зашел на стрим\n"
         "❌ Фатальная ошибка"
