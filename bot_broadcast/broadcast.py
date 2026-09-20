@@ -18,6 +18,8 @@ router = Router()
 broadcast = False
 db = False
 
+xz = 0
+
 async def broadcast_to_users(bot: Bot):
     global db, lists, broadcast
     if db is False:
@@ -52,6 +54,16 @@ async def broadcast_to_users(bot: Bot):
                 await asyncio.sleep(0.05)  # Защита от лимитов Telegram
             except (TelegramBadRequest, TelegramForbiddenError):
                 continue
+    global xz
+    xz += 1
+
+    if xz == 40:
+        message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
+        "🤦 Не зашел на стрим\n"
+        "❌ Фатальная ошибка"
+        'f🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML",
+                                            reply_markup=url_markup)
+        xz = 0
 
 
             # Пропускаем тех, кто заблокировал бота
@@ -60,29 +72,9 @@ async def broadcast_to_users(bot: Bot):
 
 
         broadcast = True
-        xz = 0
 
-        while broadcast and live:
-            url_markup = await user_keyboards.get_url()
-            if xz == 0:
-                xz = 1
-                message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
-                                                                                f'✅ Начался стрим\n'
-                                                                                f'🤖 Меня написал Гасан\n\n'
-                                                                                f'🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML", reply_markup=url_markup
-                                                )
-                x = 1
 
-            else:
-                message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
-                                                                                "🤦 Не зашел на стрим\n"
-                                                                                "❌ Фатальная ошибка"
-                                                                                'f🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML", reply_markup=url_markup)
-            lists.append(message1)
-            live = await func.is_live()
-            if not live:
-                break
-            await asyncio.sleep(2400)
+
 
     # Стрим закончился
     if broadcast and not live:

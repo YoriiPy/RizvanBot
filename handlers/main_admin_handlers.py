@@ -106,7 +106,7 @@ async def add_main_admin_to_users(message: Message):
 async def wait_edit_tg_channel(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
     now_tg_channel_id = await rq.get_channel_id()
-    await callback.message.edit_text(f"🆕 Отправьте ID нового Telegram канала\n🤖 Текущее ID: {now_tg_channel_id[0]}",
+    await callback.message.edit_text(f"🆕 Отправьте ID нового Telegram канала\n🤖 Текущее ID: {now_tg_channel_id}",
                                      reply_markup=kb.return_start_keyboard())
     await state.update_data(mid=callback.message.message_id)
     await state.set_state(st.states.wait_new_telegram_channel)
