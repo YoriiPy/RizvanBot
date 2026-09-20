@@ -21,7 +21,9 @@ async def is_live() -> bool:
                 if resp.status != 200:
                     return False
 
-                if "watch?v=" in str(resp.url):
+                chunk = await resp.content.read(15000)
+
+                if b'"isLive":true' in chunk:
                     return True
                 else:
                     return False
