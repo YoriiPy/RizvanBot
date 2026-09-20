@@ -19,11 +19,11 @@ broadcast = False
 db = False
 
 async def broadcast_to_users(bot: Bot):
-    global db, lists
+    global db, lists, broadcast
     if db is False:
         await models.init_db()
         db = True
-    global broadcast
+
     users = await rq.get_users_broadcast()
 
     if not users:
@@ -63,7 +63,6 @@ async def broadcast_to_users(bot: Bot):
 
 
         while broadcast and live:
-            global lists
             message1 = await bot.send_message(chat_id=-1002198546061, text=text, parse_mode="HTML")
             message2 = await bot.send_message(chat_id=-1002179134100, text=text, parse_mode="HTML")
             lists.append(message1)
