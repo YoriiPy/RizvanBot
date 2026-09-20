@@ -8,7 +8,7 @@ from aiogram.types import Message
 from dotenv import load_dotenv
 
 from database import requests as rq, models
-from keyboards import  user_keyboards
+from keyboards import  user_keyboards as userkb
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from bot_broadcast import func
 import asyncio
@@ -54,6 +54,8 @@ async def broadcast_to_users(bot: Bot):
                 await asyncio.sleep(0.05)  # Защита от лимитов Telegram
             except (TelegramBadRequest, TelegramForbiddenError):
                 continue
+        broadcast = True
+        await bot.send_message(chat_id=await rq.get_channel_id(), text=text, reply_markup=await userkb.get_url())
     global xz
     xz += 1
 
