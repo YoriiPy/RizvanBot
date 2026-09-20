@@ -36,20 +36,20 @@ async def get_channel_name():
         async with db.execute("SELECT * FROM streams") as cursor:
             result = await cursor.fetchone()
             if result is None:
-                await db.execute("INSERT INTO streams (url) VALUES (?)", ("Rizvanchik_", ))
+                await db.execute("INSERT INTO streams (name) VALUES (?)", ("Rizvanchik_", ))
                 await db.commit()
                 return "Rizvanchik_"
             return result[0]
 
-async def edit_url_stream(url: str):
+async def edit_channel_name(channel_name: str):
     async with aiosqlite.connect(DB_NAME) as db:
         async with db.execute("SELECT * FROM streams") as cursor:
             result = await cursor.fetchone()
             if result:
-                await db.execute("UPDATE streams SET url = ?", (url, ))
+                await db.execute("UPDATE streams SET channel_name = ?", (channel_name, ))
                 await db.commit()
             else:
-                await db.execute("INSERT INTO streams (url) VALUES (?)", (url, ))
+                await db.execute("INSERT INTO streams (channel_name) VALUES (?)", (channel_name, ))
 
 # ДОБАВЛЕНИЕ
 async def add_admin(user_id: int, username: str):
@@ -103,6 +103,29 @@ async def search_main_admin(user_id: int) -> bool:
                 return True
             else:
                 return False
+
+
+async def edit_channel_id(channel_id: int):
+    async with aiosqlite.connect(DB_NAME) as db:
+        async with db.execute("SELECT * FROM streams") as cursor:
+            result = await cursor.fetchone()
+            if not result:
+                await db.execute("INSERT INTO streams (channel_id, channel_name) VALUES (?)", (channel_id, 'Rizvanchik_'))
+                await db.commit()
+                return
+        await db.execute("UPDATE streams SET channel_id = ?", (channel_id, ))
+        await db.commit()
+
+async def get_channel_id():
+    async with aiosqlite.connect(DB_NAME) as db:
+        async with db.execute("SELECT channel_id FROM streams") as cursor:
+            result = await cursor.fetchone()
+            if result:
+                return result
+            else:
+                await db.execute("INSERT INTO streams (channel_id, channel_name) VALUES (?)", (-1004372478435, 'Rizvanchik_'))
+                await db.commit()
+
 
 
 

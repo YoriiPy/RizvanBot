@@ -2,9 +2,10 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 def start_keyboard():
     keyboard = InlineKeyboardBuilder()
-    keyboard.button(text="🚀 Поменять значение URL", callback_data="edit_stream_url")
+    keyboard.button(text="🚀 Поменять YouTube канал", callback_data="edit_stream_url")
     keyboard.button(text="👀 Состояние стрима", callback_data="check_stream")
     keyboard.button(text="👮 Добавить main admin", callback_data="add_main_admin")
+    keyboard.button(text="🤖 Поменять Telegram канал", callback_data="edit_tg_channel")
     keyboard.adjust(1, 1, 1)
     return keyboard.as_markup()
 

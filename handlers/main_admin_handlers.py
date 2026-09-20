@@ -18,15 +18,15 @@ router = Router()
 async def data_url(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
 
-    await callback.message.edit_text("✅ Отправьте URL стрима нового канала", reply_markup=kb.return_start_keyboard())
-    await state.set_state(st.states.wait_new_url)
+    await callback.message.edit_text("✅ Отправьте имя нового YouTube канала", reply_markup=kb.return_start_keyboard())
+    await state.set_state(st.states.wait_new_youtube_channel)
     await state.update_data(message_id=callback.message.message_id)
 
-@router.message(st.states.wait_new_url)
+@router.message(st.states.wait_new_youtube_channel)
 async def update_url(message: Message, state: FSMContext, bot: Bot):
-    URL = message.text
-    if not URL.isdigit():
-        await rq.edit_url_stream(URL)
+    channel_name = message.text
+    if not channel_name.isdigit():
+        await rq.edit_channel_name(channel_name)
 
         data = await state.get_data()
         message_id = data.get("message_id")
@@ -103,3 +103,29 @@ async def add_main_admin_to_users(message: Message):
         await message.answer("✅ Успешно добавлен")
     else:
         await message.answer("❌ Такого пользователя не существует")
+
+# ПОМЕНЯТЬ TG КАНАЛ
+@router.callback_query(F.data == "edit_tg_channel")
+async def wait_edit_tg_channel(callback: CallbackQuery, state: FSMContext):
+    await callback.answer()
+    now_tg_channel_id = await rq.get_channel_id()
+    await callback.message.edit_text(f"🆕 Отправьте ID нового Telegram канала\n🤖 Текущее ID: {now_tg_channel_id}",
+                                     reply_markup=await kb.return_start_keyboard())
+    await state.update_data(mid=callback.message.message_id)
+    await state.set_state(st.states.wait_new_telegram_channel)
+
+@router.message(st.states.wait_new_telegram_channel)
+async def wait_edit_tg_channel(message: Message, state: FSMContext, bot: Bot):
+    telegram_channel_id = message.text
+
+    data = await state.get_data()
+    mid = data.get("mid")
+
+    await message.delete()
+    await bot.delete_message(chat_id=message.chat.id, message_id=mid)
+    if len(str(telegram_channel_id)) == 14:
+        await rq.edit_channel_id(telegram_channel_id)
+        await message.answer("✅ Успешно сохранено", reply_markup=kb.return_start_keyboard())
+    else:
+        await message.answer("❌ ID слишком короткий")
+

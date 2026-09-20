@@ -66,7 +66,7 @@ async def broadcast_to_users(bot: Bot):
             url_markup = await user_keyboards.get_url()
             if xz == 0:
                 xz = 1
-                message1 = await bot.send_message(chat_id=-1002198546061, text=
+                message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
                                                                                 f'✅ Начался стрим\n'
                                                                                 f'🤖 Меня написал Гасан\n\n'
                                                                                 f'🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML", reply_markup=url_markup
@@ -74,7 +74,7 @@ async def broadcast_to_users(bot: Bot):
                 x = 1
 
             else:
-                message1 = await bot.send_message(chat_id=-1002198546061, text=
+                message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
                                                                                 "🤦 Не зашел на стрим\n"
                                                                                 "❌ Фатальная ошибка"
                                                                                 'f🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML", reply_markup=url_markup)
