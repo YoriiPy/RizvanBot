@@ -63,6 +63,7 @@ async def broadcast_to_users(bot: Bot):
         "❌ Фатальная ошибка"
         'f🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML",
                                             reply_markup=url_markup)
+        lists.append(message1)
         xz = 0
 
 
