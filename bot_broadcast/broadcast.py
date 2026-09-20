@@ -21,7 +21,7 @@ db = False
 xz = 0
 
 async def broadcast_to_users(bot: Bot):
-    global db, lists, broadcast
+    global db, lists, broadcast, xz
     if db is False:
         await models.init_db()
         db = True
@@ -56,8 +56,10 @@ async def broadcast_to_users(bot: Bot):
                 continue
         broadcast = True
         await bot.send_message(chat_id=await rq.get_channel_id(), text=text, reply_markup=await userkb.get_url(), parse_mode="HTML")
-    global xz
-    xz += 1
+
+    if broadcast and live:
+        xz += 1
+
 
     if xz == 40:
         message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
@@ -74,7 +76,7 @@ async def broadcast_to_users(bot: Bot):
 
 
 
-        broadcast = True
+
 
 
 
