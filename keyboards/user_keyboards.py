@@ -10,5 +10,5 @@ async def get_url():
 
 async def get_keyboard():
     keyboard = InlineKeyboardBuilder()
-    keyboard.button(text="👀 Состояние стрима", callback_data="check_stream")
+    keyboard.button(text="👀 Проверить статус эфира", callback_data="check_stream")
     return keyboard.as_markup()
