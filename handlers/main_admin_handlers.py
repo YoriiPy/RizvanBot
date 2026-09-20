@@ -18,7 +18,7 @@ router = Router()
 async def data_url(callback: CallbackQuery, state: FSMContext):
     await callback.answer()
 
-    await callback.message.edit_text("✅ Отправьте имя нового YouTube канала", reply_markup=kb.return_start_keyboard())
+    await callback.message.edit_text(f"🆕 Отправьте имя нового YouTube канала\n🤖 Текущее имя: {}", reply_markup=kb.return_start_keyboard())
     await state.set_state(st.states.wait_new_youtube_channel)
     await state.update_data(message_id=callback.message.message_id)
 

@@ -128,4 +128,13 @@ async def get_channel_id():
 
 
 
-
+async def get_now_youtube_channel():
+    async with aiosqlite.connect(DB_NAME) as db:
+        async with db.execute("SELECT channel_name FROM streams") as cursor:
+            if await cursor.fetchone():
+                return (await cursor.fetchone())[0]
+            else:
+                await db.execute("INSERT INTO streams (channel_id, channel_name) VALUES (?, ?)", (-1004372478435, 'Rizvanchik_'))
+                await db.commit()
+                async with db.execute("SELECT channel_name FROM streams") as cursor:
+                    return (await cursor.fetchone())[0]
