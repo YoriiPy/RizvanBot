@@ -64,7 +64,7 @@ async def broadcast_to_users(bot: Bot):
 
         while broadcast and live:
             url_markup = await user_keyboards.get_url()
-            message1 = await bot.send_message(chat_id=-1002198546061, text=
+            message1 = await bot.send_message(chat_id=-1004372478435, text=
                                                                             f'❌ Не зашел на стрим\n'
                                                                             f'🥲 Фатальная ошибка\n'
                                                                             f'🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML", reply_markup=url_markup
