@@ -55,7 +55,8 @@ async def broadcast_to_users(bot: Bot):
             except (TelegramBadRequest, TelegramForbiddenError):
                 continue
         broadcast = True
-        await bot.send_message(chat_id=await rq.get_channel_id(), text=text, reply_markup=await userkb.get_url(), parse_mode="HTML")
+        message = await bot.send_message(chat_id=await rq.get_channel_id(), text=text, reply_markup=await userkb.get_url(), parse_mode="HTML")
+        lists.append(message)
 
     if broadcast and live:
         xz += 1
