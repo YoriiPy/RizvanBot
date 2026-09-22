@@ -45,12 +45,13 @@ async def broadcast_to_users(bot: Bot):
 
         for user_id in users:
             try:
-                await bot.send_message(
+                message = await bot.send_message(
                     chat_id=user_id,
                     text=text,
                     parse_mode="HTML",
-                    reply_markup=url_markup
-                )
+                    reply_markup=url_markup)
+                lists.append(message)
+
                 await asyncio.sleep(0.05)  # Защита от лимитов Telegram
             except (TelegramBadRequest, TelegramForbiddenError):
                 continue
@@ -69,7 +70,7 @@ async def broadcast_to_users(bot: Bot):
         message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
         "🤦 Не зашел на стрим\n"
         "❌ Фатальная ошибка"
-        'f🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML",
+        f'🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML",
                                             reply_markup=url_markup)
         lists.append(message1)
         xz = 0
