@@ -69,7 +69,7 @@ async def broadcast_to_users(bot: Bot):
 
         message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
         "🤦 Не зашел на стрим\n"
-        "❌ Фатальная ошибка"
+        "❌ Фатальная ошибка\n"
         f'🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML",
                                             reply_markup=url_markup)
         lists.append(message1)
