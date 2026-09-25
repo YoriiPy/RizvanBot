@@ -63,7 +63,7 @@ async def broadcast_to_users(bot: Bot):
         xz += 1
 
 
-    if xz == 40:
+    if xz == 60:
         url_markup = await userkb.get_url()
         channel_name = await rq.get_channel_name()
 
