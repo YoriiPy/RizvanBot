@@ -40,7 +40,7 @@ async def broadcast_to_users(bot: Bot):
         text = (
             "✅ Началась трансляция Ризвана 🦍\n"
             "👀 Заходи на стрим\n\n"
-            f'💫 <a href="{url}">Ссылка на стрим</a>'
+           f'💫 Ссылка: {url}'
         )
 
         for user_id in users:
