@@ -90,7 +90,7 @@ async def broadcast_to_users(bot: Bot):
                     text=(
                         "🤦 Не зашел на стрим\n"
                         "❌ Фатальная ошибка\n"
-                        f'🦍 <a href="{stream_url}">Заходи на стрим</a> 🧆'
+                        f'🦍 Ссылка: {stream_url} 🧆'
                     ),
                     parse_mode="HTML",
                     reply_markup=url_markup
