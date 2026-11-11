@@ -5,7 +5,7 @@ import re
 from database import requests as rq
 
 
-async def is_live() -> bool:
+async def is_live() -> bool | str:
 
     HEADERS = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36",
@@ -22,19 +22,22 @@ async def is_live() -> bool:
                 if resp.status != 200:
                     return False
 
-                HTML = await resp.text()
+                html = await resp.text()
 
                 canonical_match = re.search(
                     r'<link rel="canonical" href="(https://www\.youtube\.com/watch\?v=[^"]+)"',
-                    HTML
+                    html
                 )
 
-                if '"isLive":true' in HTML:
-                    if canonical_match:
-                        return canonical_match.group(1)
+                if '"isLive":true' in html or '{"iconType":"LIVE"}' in html:
+                    # Ищем ID текущего видео стрима
+                    video_id_match = re.search(r'"videoId":"([a-zA-Z0-9_-]{11})"', html)
+                    if video_id_match:
+                        return f"https://www.youtube.com/watch?v={video_id_match.group(1)}"
 
-                else:
-                    return False
+                    return f"https://www.youtube.com/@{channel_name}/live"
+
+                return False
 
 
 
