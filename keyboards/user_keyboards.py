@@ -1,5 +1,5 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from database import func as fc
+from bot_broadcast import func as fc
 import asyncio
 
 async def get_url():
