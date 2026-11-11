@@ -36,11 +36,11 @@ async def broadcast_to_users(bot: Bot):
     # Стрим начался
     if not broadcast and live:
         url_markup = await userkb.get_url()
-        channel_name = await rq.get_channel_name()
+        url = func.is_live()
         text = (
             "✅ Началась трансляция Ризвана 🦍\n"
             "👀 Заходи на стрим\n\n"
-            f'<b>💫 Ссылка на стрим</b> - <a href="https://www.youtube.com/@{channel_name}/live">Смотреть</a>'
+            f'<b>💫 Ссылка на стрим</b> - <a href="{url}">Смотреть</a>'
         )
 
         for user_id in users:
