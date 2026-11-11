@@ -37,11 +37,17 @@ async def broadcast_to_users(bot: Bot):
     if not broadcast and live:
         url_markup = await userkb.get_url()
         url = func.is_live()
-        text = (
-            "✅ Началась трансляция Ризвана 🦍\n"
-            "👀 Заходи на стрим\n\n"
-            f'<b>💫 Ссылка на стрим</b> - <a href="{url}">Смотреть</a>'
-        )
+        # Стрим начался
+        if not broadcast and live:
+            url = live if isinstance(live, str) and live.startswith(
+                "http") else f"https://www.youtube.com/@{await rq.get_channel_name()}/live"
+            url_markup = await userkb.get_url()
+            text = (
+                "✅ Началась трансляция Ризвана 🦍\n"
+                "👀 Заходи на стрим\n\n"
+                f'💫 <a href="{url}">Ссылка на стрим</a>'
+            )
+        reply_markup = keyboard, parse_mode = "HTML"
 
         for user_id in users:
             try:
