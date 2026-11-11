@@ -36,7 +36,7 @@ async def broadcast_to_users(bot: Bot):
     # Стрим начался
     if not broadcast and live:
         url_markup = await userkb.get_url()
-        url = func.is_live()
+        url = await func.is_live()
         # Стрим начался
         if not broadcast and live:
             url = live if isinstance(live, str) and live.startswith(
