@@ -78,10 +78,10 @@ async def send_state_stream(callback: CallbackQuery):
     if state_stream:
         keyboard = url_keyboard.attach(back_keyboard)
         keyboard = keyboard.as_markup()
-        channel_name = await rq.get_channel_name()
+        url = await fc.is_live()
         await callback.message.edit_text(
                                     "✅ Стрим идет\n"
-                                        f'💫 <a href="https://www.youtube.com/@{channel_name}/live">Ссылка на стрим</a>',
+                                        f'💫 <a href="{url}">Ссылка на стрим</a>',
                                         reply_markup=keyboard, parse_mode="HTML")
     else:
 
