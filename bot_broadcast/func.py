@@ -26,11 +26,13 @@ async def is_live() -> bool:
 
                 canonical_match = re.search(
                     r'<link rel="canonical" href="(https://www\.youtube\.com/watch\?v=[^"]+)"',
-                    html,
+                    HTML
                 )
 
                 if '"isLive":true' in HTML:
-                    return canonical_match.group(1)
+                    if canonical_match:
+                        return canonical_match.group(1)
+
                 else:
                     return False
 
