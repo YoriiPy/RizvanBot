@@ -2,7 +2,7 @@ from aiogram import Router, F, Bot
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-
+from aiogram.types import LinkPreviewOptions
 from bot_broadcast import func as fc
 from database.requests import search_user, search_admin, search_main_admin
 from keyboards import main_admin_keyboards as kb
@@ -73,15 +73,22 @@ async def back_start(callback: CallbackQuery, state: FSMContext):
 async def send_state_stream(callback: CallbackQuery):
     url_keyboard = InlineKeyboardBuilder.from_markup(await get_url())
     back_keyboard = InlineKeyboardBuilder.from_markup(kb.return_start_keyboard())
+    keyboard = url_keyboard.attach(back_keyboard)
 
     state_stream = await fc.is_live()
     if state_stream:
-        keyboard = url_keyboard.attach(back_keyboard)
-        keyboard = keyboard.as_markup()
-        await callback.message.edit_text(
-                                    "✅ Стрим идет\n"
-                                        f'💫 Ссылка на стрим: {state_stream}',
-                                        reply_markup=keyboard, parse_mode="HTML")
+        await callback.message.answer(
+        text=f"✅ Началась трансляция Ризвана 🦍\n👀 Заходи на стрим\n\n💫 <a href='{state_stream}'>Ссылка на стрим</a>",
+        parse_mode="HTML",
+        reply_markup=keyboard.as_markup(),
+        link_preview_options=LinkPreviewOptions(
+            is_disabled=False,
+            url=state_stream,
+            prefer_large_media=True,
+            show_above_text=False
+        )
+    )
+
     else:
 
         await callback.message.edit_text("❌ Стрим выключен", reply_markup=back_keyboard.as_markup())
