@@ -3,7 +3,7 @@ from bot_broadcast import func as fc
 import asyncio
 
 async def get_url():
-    url = await fc.get_url()
+    url = await fc.is_live()
     keyboard = InlineKeyboardBuilder()
     keyboard.button(text="Стрим 🦍", url=f"{url}")
     return keyboard.as_markup()
