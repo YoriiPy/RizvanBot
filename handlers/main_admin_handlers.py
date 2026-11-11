@@ -80,7 +80,7 @@ async def send_state_stream(callback: CallbackQuery):
         keyboard = keyboard.as_markup()
         await callback.message.edit_text(
                                     "✅ Стрим идет\n"
-                                        f'💫 <a href="{state_stream}">Ссылка на стрим</a>',
+                                        f'💫 Ссылка на стрим: {state_stream}',
                                         reply_markup=keyboard, parse_mode="HTML")
     else:
 
