@@ -64,13 +64,13 @@ async def broadcast_to_users(bot: Bot):
 
 
     if xz == 90:
-        url_markup = await userkb.get_url()
+        url_markup = list(await userkb.get_url())[0][0].text
         channel_name = await rq.get_channel_name()
 
         message1 = await bot.send_message(chat_id=await rq.get_channel_id(), text=
         "🤦 Не зашел на стрим\n"
         "❌ Фатальная ошибка\n"
-        f'🦍 <a href="https://www.youtube.com/@{channel_name}/live">Заходи на стрим</a>🧆', parse_mode="HTML",
+        f'🦍 <a href="{url_markup}">Заходи на стрим</a>🧆', parse_mode="HTML",
                                             reply_markup=url_markup)
         lists.append(message1)
         xz = 0

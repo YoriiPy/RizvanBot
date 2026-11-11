@@ -1,11 +1,11 @@
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from database import requests as rq
+from database import func as fc
 import asyncio
 
 async def get_url():
-    url = await rq.get_channel_name()
+    url = await fc.get_url()
     keyboard = InlineKeyboardBuilder()
-    keyboard.button(text="Стрим 🦍", url=f"https://youtube.com/@{url}/live")
+    keyboard.button(text="Стрим 🦍", url=f"{url}")
     return keyboard.as_markup()
 
 async def get_keyboard():

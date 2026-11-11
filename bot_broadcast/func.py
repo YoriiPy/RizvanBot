@@ -1,5 +1,6 @@
 import aiohttp
 import asyncio
+import re
 
 from database import requests as rq
 
@@ -23,8 +24,13 @@ async def is_live() -> bool:
 
                 HTML = await resp.text()
 
+                canonical_match = re.search(
+                    r'<link rel="canonical" href="(https://www\.youtube\.com/watch\?v=[^"]+)"',
+                    html,
+                )
+
                 if '"isLive":true' in HTML:
-                    return True
+                    return canonical_match.group(1)
                 else:
                     return False
 
